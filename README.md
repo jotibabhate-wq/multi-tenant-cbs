@@ -1,5 +1,14 @@
 # Multi-Tenant CBS on Laravel + AWS — DevOps Starter Kit
+## CI/CD Status
 
+- Terraform Validate: Passing
+- Python Checks: Passing
+
+## Project Architecture
+
+GitHub Repository → GitHub Actions → Terraform Format → Terraform Init → Terraform Validate
+
+AWS resources are not deployed automatically. Infrastructure deployment requires a separate manual review and approval.
 Configuration/infrastructure starter only; it does not contain a website or a complete CBS backend.
 
 ## Included
