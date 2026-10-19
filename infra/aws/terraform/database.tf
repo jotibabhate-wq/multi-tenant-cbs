@@ -15,11 +15,11 @@ resource "aws_rds_cluster" "control" {
   manage_master_user_password = true
   db_subnet_group_name        = aws_db_subnet_group.main[0].name
   vpc_security_group_ids      = [aws_security_group.database.id]
-  storage_encrypted            = true
-  skip_final_snapshot          = false
-  final_snapshot_identifier    = "${var.project_name}-final-snapshot"
-  backup_retention_period      = 1
-  deletion_protection          = true
+  storage_encrypted           = true
+  skip_final_snapshot         = false
+  final_snapshot_identifier   = "${var.project_name}-final-snapshot"
+  backup_retention_period     = 1
+  deletion_protection         = true
   tags                        = { Environment = var.environment }
 }
 
