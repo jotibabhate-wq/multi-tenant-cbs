@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Multi-Tenant CBS API
+  version: 1.0.0
+  description: API contract starter; endpoints are not implemented by this spec.
+servers:
+  - url: https://api.example.com
+    description: Replace with deployed API URL
+paths:
+  /tenants:
+    post:
+      summary: Request tenant provisioning
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [code, name]
+              properties:
+                code:
+                  type: string
+                  pattern: '^[a-z0-9-]{3,30}$'
+                name:
+                  type: string
+      responses:
+        "202":
+          description: Request accepted
+        "400":
+          description: Invalid request
+        "401":
+          description: Unauthorized
+  /billing/webhook:
+    post:
+      summary: Receive billing provider event
+      description: Verify provider signature before processing.
+      parameters:
+        - name: X-Webhook-Signature
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type]
+              properties:
+                type:
+                  type: string
+                  example: invoice.payment_failed
+                tenant_code:
+                  type: string
+      responses:
+        "200":
+          description: Event accepted
+        "400":
+          description: Invalid event
+        "401":
+          description: Invalid signature
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
