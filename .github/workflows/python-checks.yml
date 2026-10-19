@@ -1,0 +1,28 @@
+name: Python Checks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "lambdas/**"
+      - ".github/workflows/python-checks.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "lambdas/**"
+      - ".github/workflows/python-checks.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile Lambda source
+        run: python -m py_compile lambdas/provision_tenant/lambda_function.py
